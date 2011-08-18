@@ -76,7 +76,7 @@ public class Annotation {
 	private long maxLength = -1;
 	
 	/// 
-	/// indice del video più lungo
+	/// indice del video piu' lungo
 	/// 
 	private int maxLengthIndex = -1;
 	
@@ -148,7 +148,7 @@ public class Annotation {
 			tv.open();
 
 			/** Cerca il video con la massima durata
-			 * funziona finché non esiste uno spiazzamento
+			 * funziona finche' non esiste uno spiazzamento
 			 * iniziale nei video
 			 */
 			long tmp = tv.getEndTime();
