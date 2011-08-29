@@ -1,6 +1,9 @@
 package it.polito.atlas.alea2.core;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Configuration {
@@ -29,6 +32,12 @@ public class Configuration {
 
 	private void load() throws IOException {
 		properties = new Properties();
-		properties.load(getClass().getClassLoader().getResourceAsStream("alea.properties"));
+		InputStream is;
+		if (new File("alea.properties").exists()) {
+			is = new FileInputStream("alea.properties");
+		} else {
+			is = getClass().getClassLoader().getResourceAsStream("alea.properties");
+		}
+		properties.load(is);
 	}
 }
