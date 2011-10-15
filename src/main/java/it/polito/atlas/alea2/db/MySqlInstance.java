@@ -58,10 +58,11 @@ public class MySqlInstance implements DBInstance {
 			pool = new ArrayList<Connection>();
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
+				pool.add((Connection) DriverManager.getConnection(url, user, password));
 			} catch (Exception e) {
 				e.printStackTrace();
+				pool = null;
 			}
-			pool.add((Connection) DriverManager.getConnection(url, user, password));
 		}
 		return pool;
 	}
