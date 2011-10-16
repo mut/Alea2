@@ -16,11 +16,13 @@ public class MySqlInstance implements DBInstance {
 
 	@Override
 	public int update(String sql) throws SQLException {
+//		System.out.println(sql);
 		return getStatement().executeUpdate(sql);
 	}
 
 	@Override
 	public int insert(String sql) throws SQLException {
+//		System.out.println(sql);
 		return update(sql);
 	}
 
