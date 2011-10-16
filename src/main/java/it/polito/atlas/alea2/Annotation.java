@@ -267,7 +267,27 @@ public class Annotation {
         for(Track t : list)
         	tracksText.add((TrackText)t);
     }
-	/**
+
+    public void addTrackVideo(Track t)
+    {
+    	if (t instanceof TrackVideo)
+    		tracksVideo.add((TrackVideo)t);
+
+    }
+
+    public void addTrackLIS(Track t)
+    {
+    	if (t instanceof TrackLIS)
+    		tracksLIS.add((TrackLIS)t);
+    }
+
+    public void addTrackText(Track t)
+    {
+    	if (t instanceof TrackText)
+    		tracksText.add((TrackText)t);
+    }
+
+    /**
 	 * Link to a Object representing the Annotation
 	 */
 	public Object link;
