@@ -20,9 +20,12 @@ public class DBProject {
         boolean allOK = true;
         
 		String name = p.getName();
-		String sql = "insert into Project values(" + 
-			name + ", " + 
-			p.getTags() + ")";
+		String tags = "";
+		for (String t : p.getTags())
+			tags += t + " ";
+		String sql = "insert into Project (name, tags) values('" + 
+			name + "', '" + 
+			tags.trim() + "')";
 		db.insert(sql);
         
         ResultSet rs = null;
