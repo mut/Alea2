@@ -71,5 +71,9 @@ public class Slice {
 	public void setInfo(Object info) {
 		this.info = info;
 	}
-
+	
+    /**
+	 * Link to a Object representing the Slice
+	 */
+	public Object link;
 }

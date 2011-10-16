@@ -75,6 +75,11 @@ public abstract class Track {
 		return true;
 	}
 
+	public boolean addSlice(Slice slice) {
+		slices.add(slice);
+		return true;
+	}
+
 	/**
 	 * Collegamento ad un oggetto che rappresenta la traccia
 	 */
