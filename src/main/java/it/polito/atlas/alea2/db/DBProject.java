@@ -26,8 +26,7 @@ public class DBProject {
 		String sql = "insert into Project (name, tags) values('" + 
 			name + "', '" + 
 			tags.trim() + "')";
-		db.insert(sql);
-        
+		
         ResultSet rs = null;
 		long id_project = -1;
 		Statement stmt = db.getStatement();
