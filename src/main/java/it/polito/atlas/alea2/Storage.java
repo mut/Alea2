@@ -40,10 +40,12 @@ public interface Storage {
 	 * Write the Project to the Storage 
 	 * @param project
 	 * The Project to write
+	 * @param overwrite
+	 * Behavior if the project already exists in Storage
 	 * @return
 	 * True if success
 	 */
-	boolean writeProject(Project project);
+	boolean writeProject(Project project, boolean overwrite);
 
 
 	boolean renameProject(String s, String s1);

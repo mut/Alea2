@@ -14,12 +14,18 @@ import it.polito.atlas.alea2.Project;
 
 public class DBProject {
 
-	protected static boolean write(Project p, DBInstance db) throws SQLException, DBRuntimeException {
+	protected static boolean write(Project p, DBInstance db, boolean overwrite) throws SQLException, DBRuntimeException {
         if(p == null)
             return false;
         boolean allOK = true;
         
+
 		String name = p.getName();
+		Statement stmt = db.getStatement();
+		if (overwrite)
+			if (stmt.execute("delete from Project where name = '" + name + "'"))
+				throw new DBRuntimeException("Delete project failed (" + name + ")");
+
 		String tags = "";
 		for (String t : p.getTags())
 			tags += t + " ";
@@ -29,7 +35,7 @@ public class DBProject {
 		
         ResultSet rs = null;
 		long id_project = -1;
-		Statement stmt = db.getStatement();
+		stmt = db.getStatement();
 		if (stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS) != 1)
 			throw new DBRuntimeException("Insert project failed (" + name + ")");
 	
