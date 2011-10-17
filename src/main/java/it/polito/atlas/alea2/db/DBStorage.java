@@ -15,13 +15,13 @@ public class DBStorage implements Storage {
 	private DBInstance db;
 	
 	@Override
-	public boolean writeProject(Project project) {
+	public boolean writeProject(Project project, boolean overwrite) {
 		if (project == null)
 			return false;
 
 		boolean allOK;
 		try {
-			allOK = DBProject.write(project, db);
+			allOK = DBProject.write(project, db, overwrite);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			allOK = false;
