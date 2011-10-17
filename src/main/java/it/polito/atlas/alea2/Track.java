@@ -71,12 +71,12 @@ public abstract class Track {
 	}
 
 	public boolean addSlices(Collection<Slice> slices) {
-		slices.addAll(slices);
+		this.slices.addAll(slices);
 		return true;
 	}
 
 	public boolean addSlice(Slice slice) {
-		slices.add(slice);
+		this.slices.add(slice);
 		return true;
 	}
 
