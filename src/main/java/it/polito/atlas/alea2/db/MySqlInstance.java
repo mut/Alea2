@@ -61,6 +61,7 @@ public class MySqlInstance implements DBInstance {
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 				pool.add((Connection) DriverManager.getConnection(url, user, password));
+				pool.get(0).createStatement().execute("SET sql_mode='NO_BACKSLASH_ESCAPES'");
 			} catch (Exception e) {
 				e.printStackTrace();
 				pool = null;

@@ -32,7 +32,7 @@ public class DBTrack {
 	
 		rs = stmt.getGeneratedKeys();
 		if (rs.next()) {
-			id_annotation = rs.getLong(1);
+			id_track = rs.getLong(1);
 		} else {
 			throw new DBRuntimeException("Can't get id_track of (" + name + ")");
 		}
