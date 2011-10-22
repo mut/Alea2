@@ -6,50 +6,37 @@ import java.util.Collection;
 import java.util.List;
 //import static java.lang.String.format;
 
+/**
+ * @author  DANGELOA
+ */
 public class Annotation {
-	/// 
-	/// Constructor
-	/// 
 	public Annotation (String name) {	
-		this.name=name;
-		state = States.Pause;
-		position = 0;
-		length = 0;
+		setName(name);
+		setLenght(length);
 	}
 
-	/// 
-	/// Name of annotation
-	/// 
+	/**
+	 * Name of annotation
+	 * @uml.property  name="name"
+	 */
 	private String name;
 
 	/**
-	 * @return the name
+	 * @return  the name
+	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name  the name to set
+	 * @uml.property  name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/// 
-	/// States of annotation
-	/// 
-	public enum States {
-		Play, Pause
-	}		
-	private States state;
-	/**
-	 * @return the state
-	 */
-	public States getState() {
-		return state;
-	}
-	
 	/// 
 	/// Length of annotation
 	/// 
@@ -70,23 +57,17 @@ public class Annotation {
 	}
 
 
-	/// 
-	/// Lunghezza massima dei video
-	/// 
-	private long maxLength = -1;
-	
-	/// 
-	/// indice del video piu' lungo
-	/// 
-	private int maxLengthIndex = -1;
-	
 	///
 	/// LIS Tracks
 	///
+	/**
+	 * @uml.property  name="tracksLIS"
+	 */
 	private List<TrackLIS> tracksLIS = new ArrayList<TrackLIS>();
 
 	/**
-	 * @return the LIS tracks
+	 * @return  the LIS tracks
+	 * @uml.property  name="tracksLIS"
 	 */
 	public List<TrackLIS> getTracksLIS() {
 		return tracksLIS;
@@ -95,10 +76,14 @@ public class Annotation {
 	///
 	/// Video Tracks
 	///
+	/**
+	 * @uml.property  name="tracksVideo"
+	 */
 	private List <TrackVideo> tracksVideo = new ArrayList <TrackVideo> ();
 
 	/**
-	 * @return the Video tracks
+	 * @return  the Video tracks
+	 * @uml.property  name="tracksVideo"
 	 */
 	public List<TrackVideo> getTracksVideo() {
 		return tracksVideo;
@@ -107,10 +92,14 @@ public class Annotation {
 	///
 	/// Text Tracks
 	///
+	/**
+	 * @uml.property  name="tracksText"
+	 */
 	private List <TrackText> tracksText = new ArrayList <TrackText> ();
 	
 	/**
-	 * @return the Text tracks
+	 * @return  the Text tracks
+	 * @uml.property  name="tracksText"
 	 */
 	public List<TrackText> getTracksText() {
 		return tracksText;
@@ -124,9 +113,9 @@ public class Annotation {
 		return c;
 	}
 
-	/// 
-	/// Ricalcola la durata in millisecondi
-	/// 
+	/**
+	 * @return The length in milliseconds
+	 */
 	public long calcLenght () {
 		long end = 0;
 		for (Track t : getTracks()) {
@@ -137,117 +126,6 @@ public class Annotation {
 		length = end;
 		return end;
 	}
-	
-	///
-	/// Apre le finestre dei video
-	///
-	public void open () {
-		int i = 0;
-		
-		for (TrackVideo tv : tracksVideo) {
-			tv.open();
-
-			/** Cerca il video con la massima durata
-			 * funziona finche' non esiste uno spiazzamento
-			 * iniziale nei video
-			 */
-			long tmp = tv.getEndTime();
-			if (tmp > maxLength) {
-				maxLength = tmp;
-				maxLengthIndex = i;
-			}
-			++i;
-		}
-	}
-	
-	///
-	/// Chiude le finestre dei video
-	///
-	public void close () {
-		for (TrackVideo t : tracksVideo) {
-			t.close();
-		}
-	}
-	
-	///
-	/// Play the annotation
-	///
-	public void play () {
-		state = States.Play;
-		for (TrackVideo t : tracksVideo) {
-			t.play();
-		}
-	}
-	
-	///
-	/// Pause the annotation
-	///
-	public void pause () {
-		state = States.Pause;
-		for (TrackVideo t : tracksVideo) {
-			t.pause();
-		}
-		getPosition();
-	}
-	
-	///
-	/// Posiziona l'annotazione (i video) in un punto preciso (in millisecondi)
-	///
-	public void seek(long time) {
-		if (time > length)
-			time = length;
-		for (TrackVideo t : tracksVideo) {
-			t.seek(time);
-		}
-		position = time;
-	}
-	
-	///
-	/// Ritorna la posizione attuale in millisecondi
-	///
-	private long position;
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(long time) {
-		seek(time);
-	}
-
-	public long getPosition() {
-		if (tracksVideo.size() > 0) {
-			position = tracksVideo.get(maxLengthIndex).getPosition();
-		} else {
-			position = 0;
-		}
-		return position;
-	}
-	
-    /**
-     * Returns a time String
-     * @param time
-     * The time in milliseconds
-     * @return
-     * The String representing the time
-     */
-    static public String timeString(long time)
-    {
-		if (time == -1)
-			time=0;
-		long millisecs = time;
-        long secs = millisecs / 1000;
-        int mins = (int)(secs / 60);
-
-        millisecs = millisecs - (secs * 1000);
-        secs = secs - (mins * 60);
-        if (mins >= 60)
-        {
-        	
-            int hours = (int)(mins / 60);
-            mins = mins - (hours * 60);
-            return String.format("%05d:%02d:%02d:%03d", hours, mins, secs, millisecs);
-        }
-        return String.format("%02d:%02d:%03d", mins, secs, millisecs);
-    }
 	
     public void addTracksVideo(List<Track> list)
     {

@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author  DANGELOA
+ */
 public class Project {
 	/**
 	 * Constructor
@@ -16,17 +19,27 @@ public class Project {
 
 	/**
 	 * Name of Project
+	 * @uml.property  name="name"
 	 */
 	private String name;
+	/**
+	 * @return
+	 * @uml.property  name="name"
+	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * @return the Project's Annotations
+	 * @return  the Project's Annotations
+	 * @uml.property  name="annotations"
 	 */
 	public List<Annotation> getAnnotations() {
 		return annotations;
 	}
+	/**
+	 * @param name
+	 * @uml.property  name="name"
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -50,15 +63,20 @@ public class Project {
 	/// 
 	/// Get / Set if Project is modified
 	/// 
+	/**
+	 * @uml.property  name="modified"
+	 */
 	private boolean modified;
 	/**
-	 * @return the modified
+	 * @return  the modified
+	 * @uml.property  name="modified"
 	 */
 	public boolean isModified() {
 		return modified;
 	}
 	/**
-	 * @param modified the modified to set
+	 * @param modified  the modified to set
+	 * @uml.property  name="modified"
 	 */
 	public void setModified(boolean modified) {
 		this.modified = modified;
@@ -66,6 +84,7 @@ public class Project {
 
 	/**
 	 * Project's Tags
+	 * @uml.property  name="tags"
 	 */
 	private Set<String> tags = new HashSet<String>();
 
@@ -78,7 +97,8 @@ public class Project {
 	}
 
 	/**
-	 * @return the tags
+	 * @return  the tags
+	 * @uml.property  name="tags"
 	 */
 	public Set<String> getTags() {
 		return tags;
@@ -96,6 +116,9 @@ public class Project {
 		addTags(newTags);
 	}
 		
+	/**
+	 * @uml.property  name="annotations"
+	 */
 	private List <Annotation> annotations = new ArrayList <Annotation> ();
 
 	/// 
@@ -113,16 +136,22 @@ public class Project {
 	/// 
 	/// Annotazione su cui si sta lavorando
 	/// 
+	/**
+	 * @uml.property  name="currentAnnotation"
+	 * @uml.associationEnd  
+	 */
 	private Annotation currentAnnotation = null;
 	
 	/**
-	 * @return the currentAnnotation
+	 * @return  the currentAnnotation
+	 * @uml.property  name="currentAnnotation"
 	 */
 	public Annotation getCurrentAnnotation() {
 		return currentAnnotation;
 	}
 	/**
-	 * @param currentAnnotation the currentAnnotation to set
+	 * @param currentAnnotation  the currentAnnotation to set
+	 * @uml.property  name="currentAnnotation"
 	 */
 	public void setCurrentAnnotation(Annotation currentAnnotation) {
 		/// 

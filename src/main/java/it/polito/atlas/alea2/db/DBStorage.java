@@ -8,10 +8,14 @@ import java.util.Dictionary;
 import java.util.List;
 
 /**
- * Class to access Project stored in a database 
+ * Class to access Project stored in a database
  */
 public class DBStorage implements Storage {
 
+	/**
+	 * @uml.property  name="db"
+	 * @uml.associationEnd  
+	 */
 	private DBInstance db;
 	
 	@Override

@@ -6,8 +6,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * @author  DANGELOA
+ */
 public class Configuration {
 
+	/**
+	 * @uml.property  name="instance"
+	 * @uml.associationEnd  
+	 */
 	private static final Configuration instance;
 
 	private Properties properties;
