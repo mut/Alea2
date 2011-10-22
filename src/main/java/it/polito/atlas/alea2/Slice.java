@@ -9,15 +9,15 @@ import java.util.List;
 public class Slice {
 
 	/**
-	 * @uml.property  name="startTime"
 	 */
 	private long startTime;
 	/**
-	 * @uml.property  name="endTime"
 	 */
 	private long endTime;
 
-	public Slice (long startTime, long endTime)
+	private Track parent;
+
+	public Slice (Track parent, long startTime, long endTime)
 	{
 		this.setStartTime(startTime);
 		this.setEndTime(endTime);
@@ -25,7 +25,6 @@ public class Slice {
 	
 	/**
 	 * @return  the Slice Start Time in milliseconds
-	 * @uml.property  name="startTime"
 	 */
 	public long getStartTime() {
 		return startTime;
@@ -33,7 +32,6 @@ public class Slice {
 
 	/**
 	 * @param startTime  the Slice Start Time to set in milliseconds
-	 * @uml.property  name="startTime"
 	 */
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
@@ -41,7 +39,6 @@ public class Slice {
 
 	/**
 	 * @return  the Slice End Time in milliseconds
-	 * @uml.property  name="endTime"
 	 */
 	public long getEndTime() {
 		return endTime;
@@ -49,19 +46,16 @@ public class Slice {
 
 	/**
 	 * @param endTime  the Slice End Time to set in milliseconds
-	 * @uml.property  name="endTime"
 	 */
 	public void setEndTime(long endTime) {
 		this.endTime = endTime;
 	}
 	
 	/**
-	 * @uml.property  name="info"
 	 */
 	private Object info;
 	/**
 	 * @return  the info
-	 * @uml.property  name="info"
 	 */
 	public Object getInfo() {
 		return info;
@@ -69,7 +63,6 @@ public class Slice {
 
 	/**
 	 * @param info  the info to set
-	 * @uml.property  name="info"
 	 */
 	public void setInfo(Object info) {
 		this.info = info;
@@ -99,4 +92,33 @@ public class Slice {
 	 * Link to a Object representing the Slice
 	 */
 	public Object link;
+
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Track parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	private Track getParent() {
+		return parent;
+	}
+
+	public void dispose() {
+		for (Property p : getProperties())
+			p.dispose();
+		getProperties().clear();
+		if (getParent()!=null)
+			getParent().remove(this);
+	}
+
+	/**
+	 * @param property The Property to remove
+	 */
+	public void remove(Property property) {
+		getProperties().remove(property);
+	}
 }

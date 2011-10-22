@@ -9,23 +9,21 @@ import java.util.Collection;
 public abstract class Track {
 
 	/**
-	 * @uml.property  name="name"
 	 */
 	private String name;
-	public Track (String name) {
+	public Track (Annotation parent, String name) {
+		this.setParent(parent);
 		this.setName(name);
 	}
 
 	/**
 	 * @return  the name
-	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
 	 * @param name  the name to set
-	 * @uml.property  name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -35,28 +33,19 @@ public abstract class Track {
 	 */
 	public enum Types {
 		/**
-		 * @uml.property  name="video"
-		 * @uml.associationEnd  
 		 */
 		Video, /**
-		 * @uml.property  name="lIS"
-		 * @uml.associationEnd  
 		 */
 		LIS, /**
-		 * @uml.property  name="text"
-		 * @uml.associationEnd  
 		 */
 		Text
 	}		
 	/**
-	 * @uml.property  name="type"
-	 * @uml.associationEnd  
 	 */
 	protected Types type;
 	
 	/**
 	 * @return  the type of Track
-	 * @uml.property  name="type"
 	 */
 	public Types getType() {
 		return type;
@@ -83,7 +72,6 @@ public abstract class Track {
 	}
 	
 	/**
-	 * @uml.property  name="slices"
 	 */
 	private Collection <Slice> slices = new ArrayList<Slice>();
 	
@@ -99,7 +87,6 @@ public abstract class Track {
 	
 	/**
 	 * @return
-	 * @uml.property  name="slices"
 	 */
 	public Collection <Slice> getSlices() {
 		return slices;
@@ -119,4 +106,34 @@ public abstract class Track {
 	 * Collegamento ad un oggetto che rappresenta la traccia
 	 */
 	public Object link;
+	
+	private Annotation parent;
+	
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Annotation parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	private Annotation getParent() {
+		return parent;
+	}
+	public void dispose() {
+		for (Slice s : getSlices()) {
+			s.dispose();
+		}
+		getSlices().clear();
+		if (getParent()!=null)
+			getParent().remove(this);
+		if ((this.type == Track.Types.Video) && (((TrackVideo)this).player != null))
+			((TrackVideo)this).player.dispose();		
+	}
+
+	public void remove(Slice slice) {
+		getSlices().remove(slice);
+	}
 }

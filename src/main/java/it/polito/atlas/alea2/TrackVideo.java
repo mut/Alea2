@@ -4,22 +4,14 @@ package it.polito.atlas.alea2;
  * @author  DANGELOA
  */
 public class TrackVideo extends Track {
-	public TrackVideo (String name)
+	public TrackVideo (Annotation parent, String name)
 	{
-		super(name);
+		super(parent, name);
 		type = Track.Types.Video;
 		player = null;
 	}
-	public TrackVideo (String name, Player playerInstance)
-	{		
-		super(name);
-		type = Track.Types.Video;
-		player = playerInstance;
-	}
 	
 	/**
-	 * @uml.property  name="player"
-	 * @uml.associationEnd  
 	 */
 	public Player player;
 
@@ -67,20 +59,17 @@ public class TrackVideo extends Track {
 	}
 
 	/**
-	 * @uml.property  name="offset"
 	 */
 	private long offset=0;
 	
 	/**
 	 * @return  the offset in milliseconds
-	 * @uml.property  name="offset"
 	 */
 	public long getOffset() {
 		return offset;
 	}
 	/**
 	 * @param offset  the offset to set in milliseconds
-	 * @uml.property  name="offset"
 	 */
 	public void setOffset(long offset) {
 		this.offset = offset;

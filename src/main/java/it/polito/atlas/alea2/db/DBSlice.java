@@ -1,6 +1,7 @@
 package it.polito.atlas.alea2.db;
 
 import it.polito.atlas.alea2.Slice;
+import it.polito.atlas.alea2.Track;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,12 +30,13 @@ class DBSlice {
 
 	/**
 	 * Read from DB all Slices of a Track 
+	 * @param t 
 	 * @param id_track
 	 * @param db
 	 * @return
 	 * @throws SQLException
 	 */
-	protected static Collection<Slice> readAll(long id_track, DBInstance db) throws SQLException {
+	protected static Collection<Slice> readAll(Track t, long id_track, DBInstance db) throws SQLException {
 		String sql = "select start, stop, info from slice where id_track = " + id_track;
 		ResultSet rs = db.getStatement().executeQuery(sql);
 		long start, stop;
@@ -49,7 +51,7 @@ class DBSlice {
 				e.printStackTrace();
 				continue;
 			}
-			Slice s = new Slice(start, stop);
+			Slice s = new Slice(t, start, stop);
 			try {
 				info = rs.getString(3);
 			} catch (SQLException e) {

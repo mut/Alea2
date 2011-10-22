@@ -1,9 +1,9 @@
 package it.polito.atlas.alea2;
 
 public class TrackLIS extends Track {
-	public TrackLIS (String name)
+	public TrackLIS (Annotation parent, String name)
 	{
-		super(name);
+		super(parent, name);
 		type = Track.Types.LIS;
 	}
 }

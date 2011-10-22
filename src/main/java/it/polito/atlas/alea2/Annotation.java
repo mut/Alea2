@@ -10,20 +10,19 @@ import java.util.List;
  * @author  DANGELOA
  */
 public class Annotation {
-	public Annotation (String name) {	
+	public Annotation (Project parent, String name) {
+		setParent(parent);
 		setName(name);
-		setLenght(length);
+		setLenght(0);
 	}
 
 	/**
 	 * Name of annotation
-	 * @uml.property  name="name"
 	 */
 	private String name;
 
 	/**
 	 * @return  the name
-	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
@@ -31,7 +30,6 @@ public class Annotation {
 
 	/**
 	 * @param name  the name to set
-	 * @uml.property  name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -61,13 +59,11 @@ public class Annotation {
 	/// LIS Tracks
 	///
 	/**
-	 * @uml.property  name="tracksLIS"
 	 */
 	private List<TrackLIS> tracksLIS = new ArrayList<TrackLIS>();
 
 	/**
 	 * @return  the LIS tracks
-	 * @uml.property  name="tracksLIS"
 	 */
 	public List<TrackLIS> getTracksLIS() {
 		return tracksLIS;
@@ -77,13 +73,11 @@ public class Annotation {
 	/// Video Tracks
 	///
 	/**
-	 * @uml.property  name="tracksVideo"
 	 */
 	private List <TrackVideo> tracksVideo = new ArrayList <TrackVideo> ();
 
 	/**
 	 * @return  the Video tracks
-	 * @uml.property  name="tracksVideo"
 	 */
 	public List<TrackVideo> getTracksVideo() {
 		return tracksVideo;
@@ -93,13 +87,11 @@ public class Annotation {
 	/// Text Tracks
 	///
 	/**
-	 * @uml.property  name="tracksText"
 	 */
 	private List <TrackText> tracksText = new ArrayList <TrackText> ();
 	
 	/**
 	 * @return  the Text tracks
-	 * @uml.property  name="tracksText"
 	 */
 	public List<TrackText> getTracksText() {
 		return tracksText;
@@ -169,5 +161,39 @@ public class Annotation {
 	 * Link to a Object representing the Annotation
 	 */
 	public Object link;
+
+	private Project parent;
+	
+	/**
+	 * @param parent the parent to set
+	 */
+	public void setParent(Project parent) {
+		this.parent = parent;
+	}
+
+	/**
+	 * @return the parent
+	 */
+	private Project getParent() {
+		return parent;
+	}
+	public void dispose() {
+		for (Track t : getTracks()) {
+			t.dispose();
+		}
+		tracksLIS.clear();
+		tracksText.clear();
+		tracksVideo.clear();
+		if (getParent()!=null)
+			getParent().remove(this);
+	}
+	public void remove(Track track) {
+    	if (track instanceof TrackLIS)
+    		tracksLIS.remove(track);
+    	else if (track instanceof TrackText)
+    		tracksText.remove(track);
+    	else if (track instanceof TrackVideo)
+    		tracksVideo.remove(track);
+	}
 }
 

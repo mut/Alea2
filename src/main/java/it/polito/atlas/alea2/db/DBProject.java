@@ -154,7 +154,7 @@ public class DBProject {
 		}
 
 		// Legge le annotazioni del progetto
-		annotations = DBAnnotation.readAll(id_project, db);
+		annotations = DBAnnotation.readAll(p, id_project, db);
 	
 		// Assegna le annotazioni al progetto
 		for (Annotation a : annotations) {

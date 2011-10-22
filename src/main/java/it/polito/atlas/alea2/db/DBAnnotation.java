@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import it.polito.atlas.alea2.Annotation;
+import it.polito.atlas.alea2.Project;
 import it.polito.atlas.alea2.Track;
 
 public class DBAnnotation
@@ -70,7 +71,7 @@ public class DBAnnotation
         return id;
     }
 */
-    protected static Collection<Annotation> readAll(long id_project, DBInstance db) throws SQLException {
+    protected static Collection<Annotation> readAll(Project p, long id_project, DBInstance db) throws SQLException {
         List<Annotation> annotations = new ArrayList<Annotation>();
         String sql = (new StringBuilder("select id_annotation, name, lenght from annotation where id_project = ")).append(id_project).toString();
         ResultSet rs = null;
@@ -80,7 +81,7 @@ public class DBAnnotation
     		Annotation a;
 			try {
 				id_annotation = rs.getLong(1);
-	    		a = new Annotation(rs.getString(2));
+	    		a = new Annotation(p, rs.getString(2));
 			} catch (SQLException e) {
 				e.printStackTrace();
 				continue;
@@ -92,17 +93,17 @@ public class DBAnnotation
 				a.setLenght(0);
 			}
 			try {
-				a.addTracksVideo(DBTrack.readAll(id_annotation, Track.Types.Video, db));
+				a.addTracksVideo(DBTrack.readAll(a, id_annotation, Track.Types.Video, db));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			try {
-				a.addTracksLIS(DBTrack.readAll(id_annotation, Track.Types.LIS, db));
+				a.addTracksLIS(DBTrack.readAll(a, id_annotation, Track.Types.LIS, db));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			try {
-				a.addTracksText(DBTrack.readAll(id_annotation, Track.Types.Text, db));
+				a.addTracksText(DBTrack.readAll(a, id_annotation, Track.Types.Text, db));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

@@ -1,5 +1,6 @@
 package it.polito.atlas.alea2.db;
 
+import it.polito.atlas.alea2.Annotation;
 import it.polito.atlas.alea2.Slice;
 import it.polito.atlas.alea2.Track;
 import it.polito.atlas.alea2.TrackLIS;
@@ -63,7 +64,7 @@ public class DBTrack {
 	 * @return The list of Tracks
 	 * @throws SQLException 
 	 */
-	protected static List<Track> readAll(long id_annotation, Track.Types tt, DBInstance db) throws SQLException {
+	protected static List<Track> readAll(Annotation a, long id_annotation, Track.Types tt, DBInstance db) throws SQLException {
 		List <Track> tracks = new ArrayList<Track>();
 		String sql = "select id_track, name from track " +
 				"where id_annotation = " + id_annotation +
@@ -81,13 +82,13 @@ public class DBTrack {
 				String trackName = rs.getString(2);
 				switch (tt) {
 					case Video:
-						t = new TrackVideo(trackName);
+						t = new TrackVideo(a, trackName);
 						break;
 					case Text:
-						t = new TrackText(trackName);
+						t = new TrackText(a, trackName);
 						break;
 					case LIS:
-						t = new TrackLIS(trackName);
+						t = new TrackLIS(a, trackName);
 						break;
 				}
 			} catch (SQLException e) {
@@ -95,7 +96,7 @@ public class DBTrack {
 				continue;
 			}
 			try {
-				t.addSlices(DBSlice.readAll(id_track, db));
+				t.addSlices(DBSlice.readAll(t, id_track, db));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

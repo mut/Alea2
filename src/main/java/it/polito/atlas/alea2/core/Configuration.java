@@ -12,8 +12,6 @@ import java.util.Properties;
 public class Configuration {
 
 	/**
-	 * @uml.property  name="instance"
-	 * @uml.associationEnd  
 	 */
 	private static final Configuration instance;
 
