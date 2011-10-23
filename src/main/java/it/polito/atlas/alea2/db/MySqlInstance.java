@@ -1,9 +1,9 @@
 package it.polito.atlas.alea2.db;
 
-import static it.polito.atlas.alea2.core.Configuration.conf;
-import static it.polito.atlas.alea2.core.ConfigurationProperty.DB_PASSWORD;
-import static it.polito.atlas.alea2.core.ConfigurationProperty.DB_URL;
-import static it.polito.atlas.alea2.core.ConfigurationProperty.DB_USERNAME;
+import static it.polito.atlas.alea2.conf.Configuration.conf;
+import static it.polito.atlas.alea2.conf.ConfigurationProperty.DB_PASSWORD;
+import static it.polito.atlas.alea2.conf.ConfigurationProperty.DB_URL;
+import static it.polito.atlas.alea2.conf.ConfigurationProperty.DB_USERNAME;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

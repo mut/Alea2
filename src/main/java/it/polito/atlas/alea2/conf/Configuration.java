@@ -1,4 +1,4 @@
-package it.polito.atlas.alea2.core;
+package it.polito.atlas.alea2.conf;
 
 import java.io.File;
 import java.io.FileInputStream;
