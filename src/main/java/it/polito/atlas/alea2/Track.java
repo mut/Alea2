@@ -153,7 +153,18 @@ public abstract class Track {
 			((TrackVideo)this).player.dispose();		
 	}
 
+	/**
+	 * @param slice The Slice to remove
+	 */
 	public void remove(Slice slice) {
 		getSlices().remove(slice);
+	}
+	/**
+	 * Remove this element from parent and dispose
+	 */
+	public void remove() {
+		if (getParent()!=null)
+			getParent().remove(this);
+		dispose();
 	}
 }

@@ -131,8 +131,6 @@ public class Slice {
 		for (Property p : getProperties())
 			p.dispose();
 		getProperties().clear();
-		if (getParent()!=null)
-			getParent().remove(this);
 	}
 
 	/**
@@ -140,5 +138,14 @@ public class Slice {
 	 */
 	public void remove(Property property) {
 		getProperties().remove(property);
+	}
+
+	/**
+	 * Remove this element from parent and dispose
+	 */
+	public void remove() {
+		if (getParent()!=null)
+			getParent().remove(this);
+		dispose();
 	}
 }

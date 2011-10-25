@@ -199,9 +199,11 @@ public class Annotation {
 		tracksLIS.clear();
 		tracksText.clear();
 		tracksVideo.clear();
-		if (getParent()!=null)
-			getParent().remove(this);
 	}
+
+	/**
+	 * @param track The Track to remove
+	 */
 	public void remove(Track track) {
     	if (track instanceof TrackLIS)
     		tracksLIS.remove(track);
@@ -209,6 +211,15 @@ public class Annotation {
     		tracksText.remove(track);
     	else if (track instanceof TrackVideo)
     		tracksVideo.remove(track);
+	}
+
+	/**
+	 * Remove this element from parent and dispose
+	 */
+	public void remove() {
+		if (getParent()!=null)
+			getParent().remove(this);
+		dispose();
 	}
 }
 

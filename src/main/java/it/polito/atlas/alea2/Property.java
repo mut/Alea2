@@ -70,7 +70,14 @@ public class Property extends Object {
 	}
 
 	public void dispose() {
+	}
+
+	/**
+	 * Remove this element from parent and dispose
+	 */
+	public void remove() {
 		if (getParent()!=null)
 			getParent().remove(this);
+		dispose();
 	}
 }
