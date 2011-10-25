@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author  DANGELOA
+ * @author   DANGELOA
  */
 public abstract class Track {
 
 	/**
+	 * @uml.property  name="name"
 	 */
 	private String name;
 	public Track (Annotation parent, String name) {
@@ -17,35 +18,46 @@ public abstract class Track {
 	}
 
 	/**
-	 * @return  the name
+	 * @return   the name
+	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * @param name  the name to set
+	 * @param name   the name to set
+	 * @uml.property  name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
-	 * @author   DANGELOA
+	 * @author     DANGELOA
 	 */
 	public enum Types {
 		/**
+		 * @uml.property  name="video"
+		 * @uml.associationEnd  
 		 */
 		Video, /**
+		 * @uml.property  name="lIS"
+		 * @uml.associationEnd  
 		 */
 		LIS, /**
+		 * @uml.property  name="text"
+		 * @uml.associationEnd  
 		 */
 		Text
 	}		
 	/**
+	 * @uml.property  name="type"
+	 * @uml.associationEnd  
 	 */
 	protected Types type;
 	
 	/**
-	 * @return  the type of Track
+	 * @return   the type of Track
+	 * @uml.property  name="type"
 	 */
 	public Types getType() {
 		return type;
@@ -72,6 +84,7 @@ public abstract class Track {
 	}
 	
 	/**
+	 * @uml.property  name="slices"
 	 */
 	private Collection <Slice> slices = new ArrayList<Slice>();
 	
@@ -87,6 +100,7 @@ public abstract class Track {
 	
 	/**
 	 * @return
+	 * @uml.property  name="slices"
 	 */
 	public Collection <Slice> getSlices() {
 		return slices;
@@ -107,17 +121,23 @@ public abstract class Track {
 	 */
 	public Object link;
 	
+	/**
+	 * @uml.property  name="parent"
+	 * @uml.associationEnd  
+	 */
 	private Annotation parent;
 	
 	/**
-	 * @param parent the parent to set
+	 * @param parent  the parent to set
+	 * @uml.property  name="parent"
 	 */
 	public void setParent(Annotation parent) {
 		this.parent = parent;
 	}
 
 	/**
-	 * @return the parent
+	 * @return  the parent
+	 * @uml.property  name="parent"
 	 */
 	private Annotation getParent() {
 		return parent;

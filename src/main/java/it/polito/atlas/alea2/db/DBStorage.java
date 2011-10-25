@@ -13,6 +13,8 @@ import java.util.List;
 public class DBStorage implements Storage {
 
 	/**
+	 * @uml.property  name="db"
+	 * @uml.associationEnd  
 	 */
 	private DBInstance db;
 	

@@ -7,7 +7,7 @@ import java.util.List;
 //import static java.lang.String.format;
 
 /**
- * @author  DANGELOA
+ * @author   DANGELOA
  */
 public class Annotation {
 	public Annotation (Project parent, String name) {
@@ -18,18 +18,21 @@ public class Annotation {
 
 	/**
 	 * Name of annotation
+	 * @uml.property  name="name"
 	 */
 	private String name;
 
 	/**
-	 * @return  the name
+	 * @return   the name
+	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name  the name to set
+	 * @param name   the name to set
+	 * @uml.property  name="name"
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -59,11 +62,13 @@ public class Annotation {
 	/// LIS Tracks
 	///
 	/**
+	 * @uml.property  name="tracksLIS"
 	 */
 	private List<TrackLIS> tracksLIS = new ArrayList<TrackLIS>();
 
 	/**
-	 * @return  the LIS tracks
+	 * @return   the LIS tracks
+	 * @uml.property  name="tracksLIS"
 	 */
 	public List<TrackLIS> getTracksLIS() {
 		return tracksLIS;
@@ -73,11 +78,13 @@ public class Annotation {
 	/// Video Tracks
 	///
 	/**
+	 * @uml.property  name="tracksVideo"
 	 */
 	private List <TrackVideo> tracksVideo = new ArrayList <TrackVideo> ();
 
 	/**
-	 * @return  the Video tracks
+	 * @return   the Video tracks
+	 * @uml.property  name="tracksVideo"
 	 */
 	public List<TrackVideo> getTracksVideo() {
 		return tracksVideo;
@@ -87,11 +94,13 @@ public class Annotation {
 	/// Text Tracks
 	///
 	/**
+	 * @uml.property  name="tracksText"
 	 */
 	private List <TrackText> tracksText = new ArrayList <TrackText> ();
 	
 	/**
-	 * @return  the Text tracks
+	 * @return   the Text tracks
+	 * @uml.property  name="tracksText"
 	 */
 	public List<TrackText> getTracksText() {
 		return tracksText;
@@ -162,17 +171,23 @@ public class Annotation {
 	 */
 	public Object link;
 
+	/**
+	 * @uml.property  name="parent"
+	 * @uml.associationEnd  
+	 */
 	private Project parent;
 	
 	/**
-	 * @param parent the parent to set
+	 * @param parent  the parent to set
+	 * @uml.property  name="parent"
 	 */
 	public void setParent(Project parent) {
 		this.parent = parent;
 	}
 
 	/**
-	 * @return the parent
+	 * @return  the parent
+	 * @uml.property  name="parent"
 	 */
 	private Project getParent() {
 		return parent;

@@ -7,11 +7,13 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @author  DANGELOA
+ * @author   DANGELOA
  */
 public class Configuration {
 
 	/**
+	 * @uml.property  name="instance"
+	 * @uml.associationEnd  
 	 */
 	private static final Configuration instance;
 
