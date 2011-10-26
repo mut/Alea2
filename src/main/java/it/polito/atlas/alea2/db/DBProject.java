@@ -163,4 +163,10 @@ public class DBProject {
 		
 		return p;
 	}
+
+	public static boolean deleteProject(String s, DBInstance db) throws SQLException {
+		String sql = "delete from project where name = '" + s + "'";
+		db.update(sql);
+		return true;
+	}
 }

@@ -25,9 +25,9 @@ public class Slice {
 
 	public Slice (Track parent, long startTime, long endTime)
 	{
-		this.setParent(parent);
 		this.setStartTime(startTime);
 		this.setEndTime(endTime);
+		this.setParent(parent);
 	}
 	
 	/**
@@ -44,6 +44,7 @@ public class Slice {
 	 */
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
+		setModified();
 	}
 
 	/**
@@ -60,6 +61,7 @@ public class Slice {
 	 */
 	public void setEndTime(long endTime) {
 		this.endTime = endTime;
+		setModified();
 	}
 	
 	/**
@@ -80,6 +82,7 @@ public class Slice {
 	 */
 	public void setInfo(Object info) {
 		this.info = info;
+		setModified();
 	}
 
 	/**
@@ -103,6 +106,7 @@ public class Slice {
 			return false;
 		}
 		properties.add(newProperty);
+		setModified();
 		return true;
 	}
 	
@@ -127,6 +131,14 @@ public class Slice {
 		return parent;
 	}
 
+	/**
+	 * set the Project as modified
+	 */
+	public void setModified() {
+		if (parent != null)
+			parent.setModified();
+	}
+
 	public void dispose() {
 		for (Property p : getProperties())
 			p.dispose();
@@ -138,6 +150,7 @@ public class Slice {
 	 */
 	public void remove(Property property) {
 		getProperties().remove(property);
+		setModified();
 	}
 
 	/**

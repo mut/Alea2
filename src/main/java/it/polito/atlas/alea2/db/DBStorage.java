@@ -205,4 +205,17 @@ public class DBStorage implements Storage {
 	public void dispose() {
 		getInstance().dispose();
 	}
+
+	@Override
+	public boolean deleteProject(String s) {
+		if (!containsProject(s)) {
+			return false;
+		}
+		try {
+			return DBProject.deleteProject(s, getInstance());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

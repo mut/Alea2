@@ -14,7 +14,8 @@ public class Project {
 	 * @param name
 	 */	
 	public Project (String name) {
-		this.name = name;
+		setName(name);
+		modified=false;
 	}
 
 	/**
@@ -42,6 +43,7 @@ public class Project {
 	 */
 	public void setName(String name) {
 		this.name = name;
+		setModified();
 	}
 	
 	@Override
@@ -82,6 +84,10 @@ public class Project {
 		this.modified = modified;
 	}
 
+	public void setModified() {
+		modified = true;
+	}
+
 	/**
 	 * Project's Tags
 	 * @uml.property  name="tags"
@@ -94,6 +100,7 @@ public class Project {
 	public void addTags(String...newTags) {
 		for(String tag : newTags)
 			tags.add(tag);
+		setModified();
 	}
 
 	/**
@@ -109,11 +116,16 @@ public class Project {
 	 */
 	public void setTags(HashSet<String> tags) {
 		this.tags = tags;
+		setModified();
 	}
 	
+	/**
+	 * @param newTags the tags to set
+	 */
 	public void setTags(String...newTags) {
 		tags.clear();
 		addTags(newTags);
+		setModified();
 	}
 		
 	/**
@@ -130,6 +142,7 @@ public class Project {
 		}
 		annotations.add(newAnnotation);
 		currentAnnotation = newAnnotation;
+		setModified();
 		return true;
 	}
 	
@@ -172,10 +185,12 @@ public class Project {
 		for (Annotation a : getAnnotations())
 			a.dispose();
 		getAnnotations().clear();
+		setModified();
 	}
 
 	public void remove(Annotation annotation) {
 		getAnnotations().remove(annotation);
+		setModified();
 	}
 
 }

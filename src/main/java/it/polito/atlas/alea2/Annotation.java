@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class Annotation {
 	public Annotation (Project parent, String name) {
-		setParent(parent);
 		setName(name);
 		setLenght(0);
+		setParent(parent);
 	}
 
 	/**
@@ -36,6 +36,7 @@ public class Annotation {
 	 */
 	public void setName(String name) {
 		this.name = name;
+		setModified();
 	}
 
 	/// 
@@ -132,38 +133,42 @@ public class Annotation {
     {
         for(Track t : list)
         	tracksVideo.add((TrackVideo)t);
-
+		setModified();
     }
 
     public void addTracksLIS(List<Track> list)
     {
         for(Track t : list)
         	tracksLIS.add((TrackLIS)t);
+		setModified();
     }
 
     public void addTracksText(List<Track> list)
     {
         for(Track t : list)
         	tracksText.add((TrackText)t);
+		setModified();
     }
 
     public void addTrackVideo(Track t)
     {
     	if (t instanceof TrackVideo)
     		tracksVideo.add((TrackVideo)t);
-
+		setModified();
     }
 
     public void addTrackLIS(Track t)
     {
     	if (t instanceof TrackLIS)
     		tracksLIS.add((TrackLIS)t);
+		setModified();
     }
 
     public void addTrackText(Track t)
     {
     	if (t instanceof TrackText)
     		tracksText.add((TrackText)t);
+		setModified();
     }
 
     /**
@@ -192,6 +197,7 @@ public class Annotation {
 	private Project getParent() {
 		return parent;
 	}
+	
 	public void dispose() {
 		for (Track t : getTracks()) {
 			t.dispose();
@@ -199,6 +205,14 @@ public class Annotation {
 		tracksLIS.clear();
 		tracksText.clear();
 		tracksVideo.clear();
+	}
+
+	/**
+	 * set the Project as modified
+	 */
+	public void setModified() {
+		if (parent != null)
+			parent.setModified();
 	}
 
 	/**
@@ -211,6 +225,7 @@ public class Annotation {
     		tracksText.remove(track);
     	else if (track instanceof TrackVideo)
     		tracksVideo.remove(track);
+		setModified();
 	}
 
 	/**

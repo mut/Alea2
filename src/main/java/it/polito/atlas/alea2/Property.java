@@ -19,9 +19,9 @@ public class Property extends Object {
 	private Slice parent;
 
 	public Property(Slice parent, String name, String value) {
-		this.setParent(parent);
 		this.setName(name);
 		this.setValue(value);		
+		this.setParent(parent);
 	}
 	
 	/**
@@ -37,6 +37,7 @@ public class Property extends Object {
 	 */
 	public void setName(String name) {
 		this.name = name;
+		setModified();
 	}
 	/**
 	 * @return
@@ -51,6 +52,7 @@ public class Property extends Object {
 	 */
 	public void setValue(String value) {
 		this.value = value;
+		setModified();
 	}
 
 	/**
@@ -67,6 +69,14 @@ public class Property extends Object {
 	 */
 	public void setParent(Slice parent) {
 		this.parent = parent;
+	}
+
+	/**
+	 * set the Project as modified
+	 */
+	public void setModified() {
+		if (parent != null)
+			parent.setModified();
 	}
 
 	public void dispose() {

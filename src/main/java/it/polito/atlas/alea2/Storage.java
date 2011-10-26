@@ -47,6 +47,7 @@ public interface Storage {
 	 */
 	boolean writeProject(Project project, boolean overwrite);
 
-
 	boolean renameProject(String s, String s1);
+
+	boolean deleteProject(String s);
 }

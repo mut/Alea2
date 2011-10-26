@@ -13,8 +13,8 @@ public abstract class Track {
 	 */
 	private String name;
 	public Track (Annotation parent, String name) {
-		this.setParent(parent);
 		this.setName(name);
+		this.setParent(parent);
 	}
 
 	/**
@@ -30,6 +30,7 @@ public abstract class Track {
 	 */
 	public void setName(String name) {
 		this.name = name;
+		setModified();
 	}
 	/**
 	 * @author     DANGELOA
@@ -108,11 +109,13 @@ public abstract class Track {
 
 	public boolean addSlices(Collection<Slice> slices) {
 		this.slices.addAll(slices);
+		setModified();
 		return true;
 	}
 
 	public boolean addSlice(Slice slice) {
 		this.slices.add(slice);
+		setModified();
 		return true;
 	}
 
@@ -142,6 +145,16 @@ public abstract class Track {
 	private Annotation getParent() {
 		return parent;
 	}
+
+	/**
+	 * set the Project as modified
+	 */
+	public void setModified() {
+		if (parent != null)
+			parent.setModified();
+	}
+
+	
 	public void dispose() {
 		for (Slice s : getSlices()) {
 			s.dispose();
@@ -158,6 +171,7 @@ public abstract class Track {
 	 */
 	public void remove(Slice slice) {
 		getSlices().remove(slice);
+		setModified();
 	}
 	/**
 	 * Remove this element from parent and dispose
