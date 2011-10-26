@@ -192,9 +192,8 @@ public class Annotation {
 
 	/**
 	 * @return  the parent
-	 * @uml.property  name="parent"
 	 */
-	private Project getParent() {
+	public Project getParent() {
 		return parent;
 	}
 	

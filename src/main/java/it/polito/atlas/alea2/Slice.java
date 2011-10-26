@@ -127,7 +127,7 @@ public class Slice {
 	 * @return  the parent
 	 * @uml.property  name="parent"
 	 */
-	private Track getParent() {
+	public Track getParent() {
 		return parent;
 	}
 

@@ -142,7 +142,7 @@ public abstract class Track {
 	 * @return  the parent
 	 * @uml.property  name="parent"
 	 */
-	private Annotation getParent() {
+	public Annotation getParent() {
 		return parent;
 	}
 
