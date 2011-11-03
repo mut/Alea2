@@ -235,5 +235,16 @@ public class Annotation {
 			getParent().remove(this);
 		dispose();
 	}
+
+	public void addTextTrack(String trackName, String text) {
+		TrackText t = new TrackText(null, trackName);
+		t.addLemmas(text);
+		t.setParent(this);
+		addTrackText(t);
+	}
+	
+	public void addTextTrack(String trackName) {
+		addTrackText(new TrackText(this, trackName));
+	}
 }
 
