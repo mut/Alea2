@@ -1,6 +1,7 @@
 package it.polito.atlas.alea2;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -67,21 +68,21 @@ public class Slice {
 	/**
 	 * @uml.property  name="info"
 	 */
-	private Object info;
+	private String name;
 	/**
 	 * @return   the info
 	 * @uml.property  name="info"
 	 */
-	public Object getInfo() {
-		return info;
+	public String getName() {
+		return name;
 	}
 
 	/**
 	 * @param info   the info to set
 	 * @uml.property  name="info"
 	 */
-	public void setInfo(Object info) {
-		this.info = info;
+	public void setName(String name) {
+		this.name = name;
 		setModified();
 	}
 
@@ -160,5 +161,11 @@ public class Slice {
 		if (getParent()!=null)
 			getParent().remove(this);
 		dispose();
+	}
+
+	public boolean addProperties(Collection<Property> properties) {
+		this.properties.addAll(properties);
+		setModified();
+		return true;
 	}
 }

@@ -17,9 +17,9 @@ class DBProperty {
 	 * @throws SQLException
 	 */
 	protected static boolean write(Property p, long id_slice, DBInstance db) throws SQLException {
-		String sql = "insert into property (name, value, id_slice) values (" +
-				p.getName() + ", " +
-				p.getValue() + ", " +
+		String sql = "insert into property (name, value, id_slice) values ('" +
+				p.getName() + "', '" +
+				p.getValue() + "', " +
 				id_slice + ")";
 		if (db.insert(sql)==1)
 			return true;
@@ -35,12 +35,12 @@ class DBProperty {
 	 * @return
 	 * @throws SQLException
 	 */
-	protected static Collection<Slice> readAll(Slice s, long id_slice, DBInstance db) throws SQLException {
-		String sql = "select key, value from property where id_slice = " + id_slice;
+	protected static Collection<Property> readAll(Slice s, long id_slice, DBInstance db) throws SQLException {
+		String sql = "select name, value from property where id_slice = " + id_slice;
 		ResultSet rs = db.getStatement().executeQuery(sql);
 		String name, value;
 		
-		Collection <Slice> slices = new ArrayList<Slice>();
+		Collection <Property> properties = new ArrayList<Property>();
 		while (rs.next()) {				
 			try {
 				name = rs.getString(1);
@@ -57,7 +57,7 @@ class DBProperty {
 			}
 			Property p = new Property(s, name, value);
 			p.setParent(s);
-			slices.add(s);
+			properties.add(p);
 		}
 		try {
 			rs.close();
@@ -65,6 +65,6 @@ class DBProperty {
 			// ignore
 			e.printStackTrace();
 		}
-		return slices;
+		return properties;
 	}
 }

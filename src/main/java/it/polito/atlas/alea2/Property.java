@@ -17,6 +17,8 @@ public class Property extends Object {
 	 * @uml.associationEnd  
 	 */
 	private Slice parent;
+	
+	public Object link;
 
 	public Property(Slice parent, String name, String value) {
 		this.setName(name);

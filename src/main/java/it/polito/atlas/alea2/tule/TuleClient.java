@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class TuleClient {
 	Socket tuleSocket=null;
@@ -62,8 +65,70 @@ public class TuleClient {
 		return output;
 	}
 	
-	public String parseTuleText(String text) {
-		// TODO
-		return submitText(text);
+	public List<Lemma> parseTuleText(String text) {
+		List <Lemma> lemmas = new ArrayList<Lemma>();
+		Stack<Lemma> treeLemmas = new Stack<Lemma>();
+		
+		Lemma activeLemma = null;
+		Lemma activeParent = null; 
+		String tuleString=submitText(text);
+		if (tuleString==null)
+			return lemmas;
+		String[] elements=tuleString.split("[ \t\n\r\\#|]");
+
+		int level=0;
+		int parentLevel=0;
+		String attrName="";
+		boolean attr = false;
+	
+		// iteration for each substring
+		for (int i=0; i<elements.length; ++i) {
+			String element=elements[i];
+			if (element.compareTo("")==0)
+				continue;
+			String value="";
+
+			// parse of sub-string
+			for (int j=0; j<element.length(); ++j) {
+				char c = element.charAt(j);
+				if (c == '(') {
+					level++;
+					continue;
+				}
+				if (c == ')') {
+					level--;
+					if (level<parentLevel-1) {
+						if (treeLemmas.isEmpty())
+							continue;
+						treeLemmas.pop();
+						parentLevel -= 3;
+						if (treeLemmas.isEmpty()) {
+							activeParent=null;
+						} else {
+							activeParent = treeLemmas.lastElement();
+						}
+					}
+					continue;
+				}
+				value+=c;
+			}
+
+			// test first if is a value, then test the keywords
+			if (attr==true) {
+				activeLemma.setAttr(attrName, value);
+				attr=false;
+			} else if (value.compareTo("HEAD")==0) {
+				activeLemma = new Lemma();
+				lemmas.add(activeLemma);
+			} else if (value.compareTo("DEPENDENTS")==0) {
+				activeLemma.setParent(activeParent);
+				activeParent = treeLemmas.push(activeLemma);
+				parentLevel = level;
+			} else if (Lemma.isAttrValidName(value)) {
+				attrName=value;
+				attr=true;
+			}
+		}
+		return lemmas;
 	}
 }

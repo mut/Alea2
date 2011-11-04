@@ -236,15 +236,15 @@ public class Annotation {
 		dispose();
 	}
 
-	public void addTextTrack(String trackName, String text) {
+	public void addTrackText(String trackName) {
+		addTrackText(new TrackText(this, trackName));
+	}
+
+	public void addTrackText(String trackName, String text) {
 		TrackText t = new TrackText(null, trackName);
-		t.addLemmas(text);
+		t.addWords(text);
 		t.setParent(this);
 		addTrackText(t);
-	}
-	
-	public void addTextTrack(String trackName) {
-		addTrackText(new TrackText(this, trackName));
 	}
 }
 
