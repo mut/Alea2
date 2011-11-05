@@ -13,14 +13,35 @@ public class TuleClient {
 	Socket tuleSocket=null;
 	InputStream is=null;
 	OutputStream os=null;
-	int port=2728;
-	public TuleClient () {
-
-	}
 	
+	/**
+	 * The default TULE hosting PC
+	 */
+	String host="localhost";
+	
+	/**
+	 * The default port for TULE Italian analyzer 
+	 */
+	int port=2728;
+
+	public TuleClient () {}
+
+	public TuleClient (String host) {
+		this.host=host;
+	}	
+
+	public TuleClient (String host, int port) {
+		this.host=host;
+		this.port=port;
+	}	
+	
+	/**
+	 * Try to connect to TULE
+	 * @return true if connected
+	 */
 	public boolean connect() {
 		try {
-			tuleSocket = new Socket("localhost", port);
+			tuleSocket = new Socket(host, port);
 			is=tuleSocket.getInputStream();
 			os=tuleSocket.getOutputStream();
 		} catch (UnknownHostException e) {
@@ -35,10 +56,11 @@ public class TuleClient {
 		return true;
 	}
 	
-	public String submitText() {
-		return submitText("(1) Babu ha fame");
-	}
-
+	/**
+	 * Submit a text to the analyzer
+	 * @param text The text to analyze
+	 * @return the TULE output string of analyzed text
+	 */
 	public String submitText(String text) {
 		if (tuleSocket==null) {
 			if (!connect())
@@ -51,6 +73,7 @@ public class TuleClient {
 		int len=0;
 		try {
 			os.write(("(1) " + text + "\n").getBytes());
+			// Read 1024 bytes at time from the socket
 			while ((len=is.read(buf, 0, bufLen))>0) {
 				String tmp = new String (buf);
 				output+=tmp.substring(0, len);
@@ -65,30 +88,56 @@ public class TuleClient {
 		return output;
 	}
 	
-	public List<Lemma> parseTuleText(String text) {
+	/**
+	 * TULE output text parser
+	 * @param text The text to analyze TULE
+	 * @return the list of Lemmas generated
+	 */
+	public List<Lemma> parseTuleText(String tuleString) {
+		// The analyzed Lemmas
 		List <Lemma> lemmas = new ArrayList<Lemma>();
+		
+		// The stack that contains the parent Lemmas
 		Stack<Lemma> treeLemmas = new Stack<Lemma>();
 		
+		// The active Lemma
 		Lemma activeLemma = null;
+		
+		// The active parent Lemma
 		Lemma activeParent = null; 
-		String tuleString=submitText(text);
-		if (tuleString==null)
-			return lemmas;
-		String[] elements=tuleString.split("[ \t\n\r\\#|]");
-
+		
+		// The active level of parenthesis
 		int level=0;
+
+		// The parent level of parenthesis
 		int parentLevel=0;
+
+		// The active attribute name
 		String attrName="";
+		
+		// Indicates if the parser is reading a attribute value
 		boolean attr = false;
 	
-		// iteration for each substring
+		// Check the parameter
+		if (tuleString==null)
+			return lemmas;
+
+		// Eliminate superfluous chars and split the TULE output in sub-strings
+		String[] elements=tuleString.split("[ \t\n\r\\#|]");
+
+		// Iterate on sub-strings
 		for (int i=0; i<elements.length; ++i) {
+			// Get the sub-string
 			String element=elements[i];
+
+			// Check the sub-string
 			if (element.compareTo("")==0)
 				continue;
-			String value="";
+			
+			// The read value sub-string (without parenthesis)
+			String word="";
 
-			// parse of sub-string
+			// Check the working level and set the value of sub-string
 			for (int j=0; j<element.length(); ++j) {
 				char c = element.charAt(j);
 				if (c == '(') {
@@ -97,6 +146,7 @@ public class TuleClient {
 				}
 				if (c == ')') {
 					level--;
+					// Check if need to change the active parent
 					if (level<parentLevel-1) {
 						if (treeLemmas.isEmpty())
 							continue;
@@ -110,22 +160,26 @@ public class TuleClient {
 					}
 					continue;
 				}
-				value+=c;
+				word+=c;
 			}
 
-			// test first if is a value, then test the keywords
+			// Test first if the word is a attribute value, then test the keywords
 			if (attr==true) {
-				activeLemma.setAttr(attrName, value);
+				activeLemma.setAttr(attrName, word);
 				attr=false;
-			} else if (value.compareTo("HEAD")==0) {
+			} else if (word.compareTo("HEAD")==0) {
+				// Found a new lemma
 				activeLemma = new Lemma();
 				lemmas.add(activeLemma);
-			} else if (value.compareTo("DEPENDENTS")==0) {
+			} else if (word.compareTo("DEPENDENTS")==0) {
+				// Set the active lemma as parent of the next own lemmas
 				activeLemma.setParent(activeParent);
 				activeParent = treeLemmas.push(activeLemma);
 				parentLevel = level;
-			} else if (Lemma.isAttrValidName(value)) {
-				attrName=value;
+			} else if (Lemma.isAttrValidName(word)) {
+				// The read word is a valid attribute name,
+				// set the parser in the reading value state
+				attrName=word;
 				attr=true;
 			}
 		}
