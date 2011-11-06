@@ -70,6 +70,6 @@ public class TrackText extends Track {
 	public void addTuleLemmas(String text, TuleClient tule) {
 		if (tule==null)
 			return;
-		addLemmas(tule.parseTuleText(text));
+		addLemmas(tule.parseTuleText(tule.submitText(text)));
 	}
 }
