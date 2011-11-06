@@ -22,7 +22,7 @@ class DBSlice {
 	protected static boolean write(Slice s, long id_track, DBInstance db) throws SQLException, DBRuntimeException {
 		boolean allOK = true;
 		String name = s.getName();
-		String sql = "insert into slice (start, stop, info, id_track) values (" +
+		String sql = "insert into slice (start, stop, name, id_track) values (" +
 				s.getStartTime() + ", " +
 				s.getEndTime() + ", '" +
 				name + "', " +
@@ -67,7 +67,7 @@ class DBSlice {
 	 * @throws SQLException
 	 */
 	protected static Collection<Slice> readAll(Track t, long id_track, DBInstance db) throws SQLException {
-		String sql = "select id_slice, start, stop, info from slice where id_track = " + id_track;
+		String sql = "select id_slice, start, stop, name from slice where id_track = " + id_track;
 		ResultSet rs = db.getStatement().executeQuery(sql);
 		long id_slice, start, stop;
 		String info;
